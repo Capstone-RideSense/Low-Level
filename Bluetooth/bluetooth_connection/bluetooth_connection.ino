@@ -40,6 +40,7 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
       value = pCharacteristic->getValue().c_str();
       Serial.println();
       directionCharacteristic->setValue(const_cast<char *>(value.c_str()));
+      directionCharacteristic->notify();
       Serial.println("Received a direction");
 
       if (value == LEFT_DIRECTION) {
