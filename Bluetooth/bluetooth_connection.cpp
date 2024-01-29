@@ -1,6 +1,9 @@
+#include <Arduino.h>
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
+// #include <HapticMotors.h>
+// #include <UltrasonicSensors.h>
 
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
@@ -43,7 +46,10 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
       directionCharacteristic->notify();
       Serial.println("Received a direction");
 
+      haptic_call(value);
+
       if (value == LEFT_DIRECTION) {
+        
         Serial.println("LEFT");
         digitalWrite(LED_BUILTIN, LOW);  // turn the LED on (HIGH is the voltage level)
         delay(1000);                      // wait for a second

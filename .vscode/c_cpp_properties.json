@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/libraries/BLE/src",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/dio_qspi/include",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/**",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/bt/host/bluedroid/api/include/api",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/bt/include/esp32/include",
+                "C:/Users/annet/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
