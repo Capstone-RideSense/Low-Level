@@ -20,5 +20,7 @@ void haptic_write(String direction) {
     delay(1000);                      // wait for a second
     digitalWrite(LED_BUILTIN, HIGH);   // turn the LED off by making the voltage LOW
     delay(1000); 
+  } else {
+    Serial.println("You wrote something other than R or L");
   }
 }
