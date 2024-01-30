@@ -1,0 +1,12 @@
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
+#define LED_BUILTIN 2
+#define LEFT_DIRECTION "L"
+#define RIGHT_DIRECTION "R"
+
+// Define UUIDs used
+#define SERVICE_UUID "9bc7cd1f-f015-497c-ad8b-67cb800444fe"
+#define DIRECTION_CHARACTERISTIC_UUID "67adc54c-16aa-4f26-8b79-29584847d15c"
+
+#endif //CONSTANTS_HPP
