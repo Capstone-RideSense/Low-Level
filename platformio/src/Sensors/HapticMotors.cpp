@@ -1,6 +1,9 @@
-#include <HapticMotors.h>
+#include <Arduino.h>
+#include "Sensors/HapticMotors.hpp"
+#include "Constants.hpp"
 
-void write(String direction) {
+// write to the haptic motors (connected to Bluetooth)
+void haptic_write(String direction) {
   if (direction == LEFT_DIRECTION) {
     Serial.println("LEFT");
     digitalWrite(LED_BUILTIN, LOW);  // turn the LED on (HIGH is the voltage level)

@@ -1,3 +1,0 @@
-#define LED_BUILTIN 2
-#define LEFT_DIRECTION "L"
-#define RIGHT_DIRECTION "R"
