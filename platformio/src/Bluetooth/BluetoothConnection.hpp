@@ -16,4 +16,6 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic);
 };
 
+void BLE_Setup();
+
 #endif //BLUETOOTHCONNECTION_HPP
