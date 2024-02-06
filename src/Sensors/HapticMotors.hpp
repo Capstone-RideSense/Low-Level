@@ -3,6 +3,6 @@
 
 #include <Arduino.h>
 
-void haptic_write(String direction);
+void haptic_write(std::string dir, int intensity);
 
 #endif //HAPTICMOTORS_HPP

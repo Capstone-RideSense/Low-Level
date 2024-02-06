@@ -2,8 +2,14 @@
 #define CONSTANTS_HPP
 
 #define LED_BUILTIN 2
+
+// direction related constants
 #define LEFT_DIRECTION "L"
 #define RIGHT_DIRECTION "R"
+#define SLIGHT_LEFT_DIRECTION "SL"
+#define SLIGHT_RIGHT_DIRECTION "SR"
+#define INTENSITY_MIN 1
+#define INTENSITY_MAX 5
 
 // Define UUIDs used
 #define SERVICE_UUID "9bc7cd1f-f015-497c-ad8b-67cb800444fe"
