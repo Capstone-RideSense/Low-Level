@@ -18,25 +18,10 @@ void ServerCallbacks::onDisconnect(BLEServer *pServer) {
   pServer->startAdvertising();
 }
 
-int findFirstOccurrence(int* arr, size_t arr_size, int target) {
+bool is_valid_intensity(char intensity_ch) {
+  // cast char to int
+  int intensity = intensity_ch - '0';
 
-  for (int ii = 0; ii < arr_size; ii++) {
-    if (arr[ii] == target) {
-      return ii;
-    }
-  }
-  return -1;
-}
-
-bool is_valid_intensity(std::string intensity_str) {
-  int intensity;
-  // check that it is a valid int
-  try {
-    intensity = stoi(intensity_str);
-  } catch (std::invalid_argument& e) {
-    Serial.print("Not a valid int");
-    return false;
-  }
   //check that the intensity is in our options
   if (intensity > INTENSITY_MAX || intensity < INTENSITY_MIN) {
     Serial.print("The given intensity of ");
@@ -49,42 +34,34 @@ bool is_valid_intensity(std::string intensity_str) {
 
 // when the client writes something to the server
 void CharacteristicCallbacks::onWrite(BLECharacteristic *pCharacteristic) {
-  std::string direction = pCharacteristic->getValue();
-
   // check that the written info is a direction characteristic
   if (pCharacteristic->getUUID().toString() == DIRECTION_CHARACTERISTIC_UUID)
   {
-    direction = pCharacteristic->getValue();
+    std::string instructions = pCharacteristic->getValue();
     Serial.println();
-    pCharacteristic->setValue(const_cast<char *>(direction.c_str()));
+    pCharacteristic->setValue(instructions);
     pCharacteristic->notify();
     Serial.print("The direction written: ");
-    Serial.println(direction.c_str());
+    Serial.println(instructions.c_str());
 
-    std::string dir;
-    std::string intensity_str;
-    int intensity = -1;
+    char direction;
+    char intensity;
 
-    std::string intensity_options = "";
-    for (int ii = INTENSITY_MIN; ii <= INTENSITY_MAX; ii++) {
-      intensity_options += std::to_string(ii);
-    }
-
-    size_t digitPos = direction.find_first_of(intensity_options);
-    if (digitPos == std::string::npos) {
-      Serial.println("Given direction has an invalid intensity");
+    if (instructions.size() != 2) {
+      Serial.println("ERROR: given direction and intensity are in an invalid format");
       return;
     }
-    dir = direction.substr(0, digitPos);
-    intensity_str = direction.substr(digitPos);
 
-    // make sure given information is valid
-    if (!is_valid_intensity(intensity_str)) {
+    direction = instructions[0];
+    intensity = instructions[1];
+
+    //check that intensity is valid
+    if (!is_valid_intensity(intensity)) {
       return;
     }
     
     // send haptic motor the direction and intensity. It will determine if the direction is valid
-    haptic_write(dir, stoi(intensity_str));
+    haptic_write(direction, intensity - '0');
   }
 }
 

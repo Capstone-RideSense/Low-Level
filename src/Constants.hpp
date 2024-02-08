@@ -4,11 +4,11 @@
 #define LED_BUILTIN 2
 
 // direction related constants
-#define LEFT_DIRECTION "L"
-#define RIGHT_DIRECTION "R"
-#define SLIGHT_LEFT_DIRECTION "SL"
-#define SLIGHT_RIGHT_DIRECTION "SR"
-#define INTENSITY_MIN 1
+#define LEFT_DIRECTION 'L'
+#define RIGHT_DIRECTION 'R'
+#define SLIGHT_LEFT_DIRECTION 'X'
+#define SLIGHT_RIGHT_DIRECTION 'Y'
+#define INTENSITY_MIN 0
 #define INTENSITY_MAX 5
 
 // Define UUIDs used
