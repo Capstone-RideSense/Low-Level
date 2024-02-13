@@ -14,6 +14,8 @@ void handle_intensity(int intensity) {
   // haptics will be set to 0 automatically
   // when given a new intensity, set it to that
 
+  // if we get a 0, set everything 
+
   // for now: blink the led for the level of intensity
   for (int ii = 0; ii < intensity; ii++) {
       scratch_blink();
@@ -28,11 +30,11 @@ void haptic_write(char direction, int intensity) {
     Serial.print("LEFT ");
     Serial.println(intensity);
 
-    haptic_addresses = {1, 2, 3};
-    
+    haptic_addresses[0] = 1;
+
     // eventually: will probably also send some address for the haptic motors to
     //             control depending on how we keep track of the motors 
-    handle_intensity(intensity);
+    
     
   } else if (direction == RIGHT_DIRECTION) {
     Serial.print("RIGHT ");
