@@ -5,7 +5,7 @@
 
 // for blind spot detection
 #define XSHUT 4
-#define BLINDSPOT_MM 1000
+#define BLINDSPOT_MM 300
 
 // direction related constants
 #define LEFT_DIRECTION 'L'
