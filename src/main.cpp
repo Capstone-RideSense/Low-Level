@@ -4,21 +4,21 @@
 
 void setup()
 {
-  Serial.begin(115200);
-  pinMode(LED_BUILTIN, OUTPUT);
+    Serial.begin(115200);
+    pinMode(LED_BUILTIN, OUTPUT);
 
-  // Bluetooth Initialization
-  BLE_Setup();
+    // Bluetooth Initialization
+    BLE_Setup();
 
-  // ToF Initialization
-  blindspot_setup();
+    // ToF Initialization
+    blindspot_setup();
 }
 
 void loop()
 {
-  // Get measurements
-  blindspot_detect();
+    // Get measurements
+    blindspot_detect();
 
-  // Give some delay
-  delay(100);
+    // Give some delay
+    delay(100);
 }
