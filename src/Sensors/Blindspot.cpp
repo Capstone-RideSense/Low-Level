@@ -4,12 +4,10 @@
 #include "Constants.hpp"
 #include <Wire.h>
 #include <vl53l1_class.h>
-// #include <vl53l4cx_class.h>
 
 #define DEV_I2C Wire
 
 // Components.
-// VL53L4CX sensor_vl53l4cx_sat(&DEV_I2C, XSHUT);
 VL53L1 sensor_vl53l1_sat(&DEV_I2C, XSHUT);
 
 
@@ -20,15 +18,12 @@ void blindspot_setup() {
     DEV_I2C.begin();
 
     // Configure VL53L1 satellite component.
-    // sensor_vl53l4cx_sat.begin();
     sensor_vl53l1_sat.begin();
 
     // Switch off VL53L1 satellite component.
-    // sensor_vl53l4cx_sat.VL53L4CX_Off();
     sensor_vl53l1_sat.VL53L1_Off();
 
     //Initialize VL53L1 satellite component.
-    // sensor_vl53l4cx_sat.InitSensor(0x12);
     sensor_vl53l1_sat.InitSensor(0x12);
 
     // Start Measurements
@@ -42,7 +37,6 @@ void blindspot_setup() {
     // RoiConfig.UserRois[0].BotRightY = 10;
     // Status = VL53L1_SetUserROI(Dev, &RoiConfig);
 
-    // sensor_vl53l4cx_sat.VL53L4CX_StartMeasurement();
     sensor_vl53l1_sat.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
     sensor_vl53l1_sat.VL53L1_ClearInterruptAndStartMeasurement();
 }
@@ -50,7 +44,6 @@ void blindspot_setup() {
 void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData) {
     char report[64];
     int status = sensor_vl53l1_sat.VL53L1_GetMultiRangingData(pMultiRangingData);
-    // int status = sensor_vl53l4cx_sat.VL53L4CX_GetMultiRangingData(pMultiRangingData);
     int no_of_object_found = pMultiRangingData->NumberOfObjectsFound;
 
     snprintf(report, sizeof(report), "VL53L1 Satellite: Count=%d, #Objs=%1d ", pMultiRangingData->StreamCount, no_of_object_found);
@@ -90,15 +83,12 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData) {
     // if measurement is valid, clear and prep for new measurement
     if (status == 0) {
         status = sensor_vl53l1_sat.VL53L1_ClearInterruptAndStartMeasurement();
-        // status = sensor_vl53l4cx_sat.VL53L4CX_ClearInterruptAndStartMeasurement();
     }
 }
 
 void blindspot_detect() {
     VL53L1_MultiRangingData_t MultiRangingData;
     VL53L1_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
-    // VL53L4CX_MultiRangingData_t MultiRangingData;
-    // VL53L4CX_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
     uint8_t NewDataReady = 0;
     int no_of_object_found = 0, j;
     char report[64];
@@ -106,7 +96,6 @@ void blindspot_detect() {
 
     do {
         status = sensor_vl53l1_sat.VL53L1_GetMeasurementDataReady(&NewDataReady);
-        // status = sensor_vl53l4cx_sat.VL53L4CX_GetMeasurementDataReady(&NewDataReady);
     } while (!NewDataReady);
 
     if ((!status) && (NewDataReady != 0)) {
