@@ -1,65 +1,59 @@
 #include <Arduino.h>
 #include "Sensors/Blindspot.hpp"
 #include "LEDs/BlindspotLED.hpp"
-#include "Constants.hpp"
-#include <Wire.h>
-#include <vl53l1_class.h>
 
 #define DEV_I2C Wire
 
 // Components.
-VL53L1 sensor_vl53l1_sat(&DEV_I2C, XSHUT);
+VL53L1 left_vl53l1(&DEV_I2C, XSHUT_LEFT);
+VL53L1 right_vl53l1(&DEV_I2C, XSHUT_RIGHT);
 
+VL53L1 vl53l1_list[] = {left_vl53l1, right_vl53l1};
+
+int num_sensors = sizeof(vl53l1_list)/sizeof(vl53l1_list[0]);
 
 void blindspot_setup() {
-    DEV_I2C.setClock(1000000);  
+    Serial.println(num_sensors);  
 
     // Initialize I2C bus.
     DEV_I2C.begin();
 
     // Configure VL53L1 satellite component.
-    sensor_vl53l1_sat.begin();
+    left_vl53l1.begin();
+    right_vl53l1.begin();
 
     // Switch off VL53L1 satellite component.
-    sensor_vl53l1_sat.VL53L1_Off();
+    left_vl53l1.VL53L1_Off();
+    right_vl53l1.VL53L1_Off();
 
     //Initialize VL53L1 satellite component.
-    sensor_vl53l1_sat.InitSensor(0x12);
+    left_vl53l1.InitSensor(LEFT_ADDR);
+    right_vl53l1.InitSensor(RIGHT_ADDR);
 
-    // Start Measurements
-    // with the correct ToF sensor: -- NOTE NOT SURE IF WE NEED THE PRESET MODE???
-    // sensor_vl53l1_sat.VL53L1_SetPresetMode(VL53L1_PRESETMODE_MULTIZONES_SCANNING);
-    // would need to define the zones - something like this:
-    // VL53L1_RoiConfig_t RoiConfig;
-    // RoiConfig.UserRois[0].TopLeftX = 9;
-    // RoiConfig.UserRois[0].TopLeftY = 13;
-    // RoiConfig.UserRois[0].BotRightX = 14;
-    // RoiConfig.UserRois[0].BotRightY = 10;
-    // Status = VL53L1_SetUserROI(Dev, &RoiConfig);
-
-    sensor_vl53l1_sat.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
-    sensor_vl53l1_sat.VL53L1_ClearInterruptAndStartMeasurement();
+    left_vl53l1.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
+    left_vl53l1.VL53L1_ClearInterruptAndStartMeasurement();
+    right_vl53l1.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
+    right_vl53l1.VL53L1_ClearInterruptAndStartMeasurement();
 }
 
-void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData) {
+void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l1_sensor, int direction) {
     char report[64];
-    int status = sensor_vl53l1_sat.VL53L1_GetMultiRangingData(pMultiRangingData);
+    int status = vl53l1_sensor.VL53L1_GetMultiRangingData(pMultiRangingData);
     int no_of_object_found = pMultiRangingData->NumberOfObjectsFound;
 
     snprintf(report, sizeof(report), "VL53L1 Satellite: Count=%d, #Objs=%1d ", pMultiRangingData->StreamCount, no_of_object_found);
     Serial.print(report);
     int num_in_blindspot = 0;
-
     for (int i = 0; i < no_of_object_found; i++) {
         // TODO: process measurement
         
         // determine if it is in the blindspot
         if (pMultiRangingData->RangeData[i].RangeMilliMeter < BLINDSPOT_MM) {
-        num_in_blindspot++;
+            num_in_blindspot++;
         }
 
         if (i != 0) {
-        Serial.print("\r\n                               ");
+            Serial.print("\r\n                               ");
         }
         Serial.print("status=");
         Serial.print(pMultiRangingData->RangeData[i].RangeStatus);
@@ -74,32 +68,38 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData) {
     }
 
     if (num_in_blindspot > 0) {
-        turn_on_blindspot_leds();
+        turn_on_blindspot_leds(direction);
     } else {
-        turn_off_blindspot_leds();
+        turn_off_blindspot_leds(direction);
     }
 
     Serial.println("");
     // if measurement is valid, clear and prep for new measurement
     if (status == 0) {
-        status = sensor_vl53l1_sat.VL53L1_ClearInterruptAndStartMeasurement();
+        status = vl53l1_sensor.VL53L1_ClearInterruptAndStartMeasurement();
     }
 }
 
 void blindspot_detect() {
-    VL53L1_MultiRangingData_t MultiRangingData;
-    VL53L1_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
-    uint8_t NewDataReady = 0;
-    int no_of_object_found = 0, j;
-    char report[64];
-    int status;
-
-    do {
-        status = sensor_vl53l1_sat.VL53L1_GetMeasurementDataReady(&NewDataReady);
-    } while (!NewDataReady);
-
-    if ((!status) && (NewDataReady != 0)) {
-        get_measurement(pMultiRangingData);
+    for (int vl53l1_idx = 0; vl53l1_idx < num_sensors; vl53l1_idx++) { 
+        VL53L1_MultiRangingData_t MultiRangingData;
+        VL53L1_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
+        uint8_t NewDataReady = 0;
+        int no_of_object_found = 0, j;
+        char report[64];
+        int status;
+    
+        do {
+            status = vl53l1_list[vl53l1_idx].VL53L1_GetMeasurementDataReady(&NewDataReady);
+        } while (!NewDataReady);
+        if ((!status) && (NewDataReady != 0)) {
+            get_measurement(pMultiRangingData, vl53l1_list[vl53l1_idx], vl53l1_idx);
+        }
     }
+}
 
+void set_roi_turn(int direction) {
+    // either set the given direction's (l, r) sensor ROI 
+    //  or turn off the sensor completely
+    //  need to see if its even realistic to set an ROI or if the entire FOV will be blocked
 }

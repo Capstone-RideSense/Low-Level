@@ -4,8 +4,26 @@
 #define LED_BUILTIN 2
 
 // for blind spot detection
-#define XSHUT 4
+// shutdown pinds for the sensors
+#define XSHUT_LEFT 4
+#define XSHUT_RIGHT 5
+
+// threshold for blindspot (in mm)
 #define BLINDSPOT_MM 1000
+
+// zone for the sensor when turning (maybe not needed)
+#define TURN_TLX 2
+#define TURN_TLY 2
+#define TURN_BRX 10
+#define TURN_BRY 10
+
+// index for each sensor in the sensor array
+#define LEFT_IDX 0
+#define RIGHT_IDX 1
+
+// addresses for sensor I2Cs
+#define LEFT_ADDR 0x12
+#define RIGHT_ADDR 0x52
 
 // direction related constants
 #define LEFT_DIRECTION 'L'
