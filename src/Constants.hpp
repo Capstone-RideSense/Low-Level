@@ -24,6 +24,7 @@
 // addresses for sensor I2Cs
 #define LEFT_ADDR 0x12
 #define RIGHT_ADDR 0x52
+#define LED_ADDR 0x69
 
 // direction related constants
 #define LEFT_DIRECTION 'L'

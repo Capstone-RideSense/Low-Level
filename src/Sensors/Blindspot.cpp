@@ -13,8 +13,6 @@ VL53L1 vl53l1_list[] = {left_vl53l1, right_vl53l1};
 int num_sensors = sizeof(vl53l1_list)/sizeof(vl53l1_list[0]);
 
 void blindspot_setup() {
-    Serial.println(num_sensors);  
-
     // Initialize I2C bus.
     DEV_I2C.begin();
 
@@ -81,7 +79,7 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l
 }
 
 void blindspot_detect() {
-    for (int vl53l1_idx = 0; vl53l1_idx < num_sensors; vl53l1_idx++) { 
+    for (int vl53l1_idx = 0; vl53l1_idx < 1; vl53l1_idx++) { 
         VL53L1_MultiRangingData_t MultiRangingData;
         VL53L1_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
         uint8_t NewDataReady = 0;

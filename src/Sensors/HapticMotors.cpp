@@ -18,7 +18,7 @@ void handle_intensity(int intensity) {
 
     // for now: blink the led for the level of intensity
     for (int ii = 0; ii < intensity; ii++) {
-        scratch_blink();
+            scratch_blink();
         }
 }
 
