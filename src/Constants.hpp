@@ -1,12 +1,18 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
+
+// PIN assignments
 #define LED_BUILTIN 2
 
 // for blind spot detection
 // shutdown pinds for the sensors
 #define XSHUT_LEFT 4
 #define XSHUT_RIGHT 5
+
+// blinker button
+#define BLINKER_LEFT 7
+#define BLINKER_RIGHT 8
 
 // threshold for blindspot (in mm)
 #define BLINDSPOT_MM 1000
@@ -22,9 +28,16 @@
 #define RIGHT_IDX 1
 
 // addresses for sensor I2Cs
-#define LEFT_ADDR 0x12
-#define RIGHT_ADDR 0x52
-#define LED_ADDR 0x69
+#define LEFT_BLINDSPOT_ADDR 0x12
+#define RIGHT_BLINDSPOT_ADDR 0x52
+#define LEFT_LED_ADDR 0x69
+#define RIGHT_LED_ADDR 0x70
+
+// haptic definitions
+#define P_HAPTIC 6 // pointer finger
+#define M_HAPTIC 7 // middle finger
+#define R_HAPTIC 8 // ring finger
+#define Y_HAPTIC 9 // pinky finger
 
 // direction related constants
 #define LEFT_DIRECTION 'L'

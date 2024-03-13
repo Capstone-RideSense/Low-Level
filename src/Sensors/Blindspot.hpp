@@ -5,6 +5,7 @@
 #include "Constants.hpp"
 #include <Wire.h>
 #include <vl53l1_class.h>
+#include <vl53l4cx_class.h>
 
 void blindspot_setup();
 

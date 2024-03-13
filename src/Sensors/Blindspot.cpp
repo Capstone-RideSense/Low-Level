@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Sensors/Blindspot.hpp"
-#include "LEDs/BlindspotLED.hpp"
+#include "LEDs/LEDDriver.hpp"
 
 #define DEV_I2C Wire
 
@@ -8,7 +8,12 @@
 VL53L1 left_vl53l1(&DEV_I2C, XSHUT_LEFT);
 VL53L1 right_vl53l1(&DEV_I2C, XSHUT_RIGHT);
 
+// VL53L4CX left_vl53l1(&DEV_I2C, XSHUT_LEFT);
+// VL53L4CX right_vl53l1(&DEV_I2C, XSHUT_RIGHT);
+
+
 VL53L1 vl53l1_list[] = {left_vl53l1, right_vl53l1};
+// VL53L4CX vl53l1_list[] = {left_vl53l1, right_vl53l1};
 
 int num_sensors = sizeof(vl53l1_list)/sizeof(vl53l1_list[0]);
 
@@ -25,13 +30,16 @@ void blindspot_setup() {
     right_vl53l1.VL53L1_Off();
 
     //Initialize VL53L1 satellite component.
-    left_vl53l1.InitSensor(LEFT_ADDR);
-    right_vl53l1.InitSensor(RIGHT_ADDR);
+    left_vl53l1.InitSensor(LEFT_BLINDSPOT_ADDR);
+    right_vl53l1.InitSensor(RIGHT_BLINDSPOT_ADDR);
 
     left_vl53l1.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
     left_vl53l1.VL53L1_ClearInterruptAndStartMeasurement();
     right_vl53l1.VL53L1_SetPresetMode(VL53L1_PRESETMODE_RANGING);
     right_vl53l1.VL53L1_ClearInterruptAndStartMeasurement();
+
+    // left_vl53l1.VL53L4CX_StartMeasurement();
+    // left_vl53l1.VL53L4CX_StartMeasurement();
 }
 
 void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l1_sensor, int direction) {
@@ -79,6 +87,7 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l
 }
 
 void blindspot_detect() {
+    // TODO: replace the loop end with num_sensors
     for (int vl53l1_idx = 0; vl53l1_idx < 1; vl53l1_idx++) { 
         VL53L1_MultiRangingData_t MultiRangingData;
         VL53L1_MultiRangingData_t *pMultiRangingData = &MultiRangingData;

@@ -1,8 +1,8 @@
-#ifndef HAPTICMOTORS_HPP
-#define HAPTICMOTORS_HPP
+// #ifndef HAPTICMOTORS_HPP
+// #define HAPTICMOTORS_HPP
 
-#include <Arduino.h>
+// #include <Arduino.h>
 
-void haptic_write(char dir, int intensity);
+// void haptic_write(char dir, int intensity);
 
-#endif //HAPTICMOTORS_HPP
+// #endif //HAPTICMOTORS_HPP
