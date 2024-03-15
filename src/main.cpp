@@ -1,49 +1,49 @@
-// #include <Arduino.h>
-// #include "Bluetooth/BluetoothConnection.hpp"
-// #include <Wire.h>
-// #include "Sensors/Blindspot.hpp"
-// #include <LEDs/LEDDriver.hpp>
+#include <Arduino.h>
+#include "Bluetooth/BluetoothConnection.hpp"
+#include <Wire.h>
+#include "Sensors/Blindspot.hpp"
+#include <LEDs/LEDDriver.hpp>
 
 
-// #define DEV_I2C Wire
+#define DEV_I2C Wire
 
-// void setup()
-// {
-//     Serial.begin(115200);
-//     DEV_I2C.begin();
-//     pinMode(LED_BUILTIN, OUTPUT);
-//     pinMode(XSHUT_LEFT, OUTPUT);
-//     pinMode(XSHUT_RIGHT, OUTPUT);
+void setup()
+{
+    Serial.begin(115200);
+    DEV_I2C.begin();
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(XSHUT_LEFT, OUTPUT);
+    pinMode(XSHUT_RIGHT, OUTPUT);
 
-//     // Bluetooth Initialization
-//     BLE_Setup();
+    // Bluetooth Initialization
+    BLE_Setup();
 
-//     // ToF Initialization
-//     blindspot_setup();
+    // ToF Initialization
+    blindspot_setup();
 
-//     // LEDDriver Initialization
-//     led_setup();
-// }
+    // LEDDriver Initialization
+    led_setup();
+}
 
 
-// void loop()
-// {
-//     // need a way to be notified when we are turning
-//     //  IMU will handle the detection - read them first
-//     // char turn_direction = imu_read_turn(); //return 0 on no turn, L on left, R on right
-//     // if (turn_direction) {
-//     //     set_roi_turn(turn_direction);
-//     // }     
+void loop()
+{
+    // need a way to be notified when we are turning
+    //  IMU will handle the detection - read them first
+    // char turn_direction = imu_read_turn(); //return 0 on no turn, L on left, R on right
+    // if (turn_direction) {
+    //     set_roi_turn(turn_direction);
+    // }     
 
-//     // Check for blinker button
-//     // read_blinker_button();
+    // Check for blinker button
+    // read_blinker_button();
     
-//     // Get blindspot measurements
-//     blindspot_detect();
+    // Get blindspot measurements
+    blindspot_detect();
 
-//     // Give some delay
-//     delay(100);
-// }
+    // Give some delay
+    delay(100);
+}
 
 
 /**
@@ -99,112 +99,114 @@
  * pin 6 (XSHUT) of the VL53L4CD satellite connected to pin A1 of the Nucleo board
  */
 /* Includes ------------------------------------------------------------------*/
-#include <Arduino.h>
-#include <Wire.h>
-#include <vl53l4cx_class.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <assert.h>
-#include <stdlib.h>
+// #include <Arduino.h>
+// #include <Wire.h>
+// #include <vl53l4cx_class.h>
+// #include <string.h>
+// #include <stdlib.h>
+// #include <stdio.h>
+// #include <stdint.h>
+// #include <assert.h>
+// #include <stdlib.h>
 
-#define DEV_I2C Wire
-#define SerialPort Serial
+// #define DEV_I2C Wire
+// #define SerialPort Serial
 
-#ifndef LED_BUILTIN
-  #define LED_BUILTIN 2
-#endif
-#define LedPin LED_BUILTIN
+// #ifndef LED_BUILTIN
+//   #define LED_BUILTIN 2
+// #endif
+// #define LedPin LED_BUILTIN
 
-#define interruptPin 13
-#define xshut 4
+// #define interruptPin 27
+// #define xshut 4
 
-// Components.
-VL53L4CX sensor_vl53l4cx_sat(&DEV_I2C, xshut);
+// // Components.
+// VL53L4CX sensor_vl53l4cx_sat(&DEV_I2C, xshut);
 
-volatile int interruptCount = 0;
+// volatile int interruptCount = 0;
 
-void measure()
-{
-  interruptCount = 1;
-}
+// void measure()
+// {
+//   interruptCount = 1;
+// }
 
-void setup()
-{
-  VL53L4CX_Error status;
-  // Led.
-  pinMode(LedPin, OUTPUT);
-  pinMode(interruptPin, INPUT_PULLUP);
-  attachInterrupt(interruptPin, measure, FALLING);
+// void setup()
+// {
+//   VL53L4CX_Error status;
+//   // Led.
+//   pinMode(LedPin, OUTPUT);
+//   pinMode(interruptPin, INPUT_PULLUP);
+//   attachInterrupt(interruptPin, measure, FALLING);
 
-  // Initialize serial for output.
-  SerialPort.begin(115200);
-  SerialPort.println("Starting...");
+//   // Initialize serial for output.
+//   SerialPort.begin(115200);
+//   SerialPort.println("Starting...");
 
-  // Initialize I2C bus.
-  DEV_I2C.begin();
-  SerialPort.println("I2C Begin");
+//   // Initialize I2C bus.
+//   DEV_I2C.begin();
+//   SerialPort.println("I2C Begin");
 
-  // Configure VL53L4CX satellite component.
-  sensor_vl53l4cx_sat.begin();
-  SerialPort.println("Satellite Begin");
+//   // Configure VL53L4CX satellite component.
+//   sensor_vl53l4cx_sat.begin();
+//   SerialPort.println("Satellite Begin");
 
-  // Switch off VL53L4CX satellite component.
-  sensor_vl53l4cx_sat.VL53L4CX_Off();
+//   // Switch off VL53L4CX satellite component.
+//   sensor_vl53l4cx_sat.VL53L4CX_Off();
 
-  // Initialize VL53L4CX satellite component.
-  status = sensor_vl53l4cx_sat.InitSensor(0x12);
-  SerialPort.println("Sensor Begin");
-  if (status) {
-    SerialPort.println("Init sensor_vl53l4cx_sat failed...");
-  }
+//   // Initialize VL53L4CX satellite component.
+//   status = sensor_vl53l4cx_sat.InitSensor(0x12);
+//   SerialPort.println("Sensor Begin");
+//   if (status) {
+//     SerialPort.println("Init sensor_vl53l4cx_sat failed...");
+//   }
 
-  sensor_vl53l4cx_sat.VL53L4CX_StartMeasurement();
-  SerialPort.println("Start Measurement");
-}
+//   sensor_vl53l4cx_sat.VL53L4CX_StartMeasurement();
+//   SerialPort.println("Start Measurement");
+//   //     // Bluetooth Initialization
+// //     BLE_Setup();
+// }
 
-void loop()
-{
-  VL53L4CX_MultiRangingData_t MultiRangingData;
-  VL53L4CX_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
-  uint8_t NewDataReady = 0;
-  int no_of_object_found = 0, j;
-  char report[64];
-  if (interruptCount) {
-    int status;
+// void loop()
+// {
+//   VL53L4CX_MultiRangingData_t MultiRangingData;
+//   VL53L4CX_MultiRangingData_t *pMultiRangingData = &MultiRangingData;
+//   uint8_t NewDataReady = 0;
+//   int no_of_object_found = 0, j;
+//   char report[64];
+//   if (interruptCount) {
+//     int status;
 
-    interruptCount = 0;
-    // Led blinking.
-    digitalWrite(LedPin, HIGH);
+//     interruptCount = 0;
+//     // Led blinking.
+//     digitalWrite(LedPin, HIGH);
 
-    status = sensor_vl53l4cx_sat.VL53L4CX_GetMeasurementDataReady(&NewDataReady);
-    if ((!status) && (NewDataReady != 0)) {
-      status = sensor_vl53l4cx_sat.VL53L4CX_GetMultiRangingData(pMultiRangingData);
-      no_of_object_found = pMultiRangingData->NumberOfObjectsFound;
-      snprintf(report, sizeof(report), "Count=%d, #Objs=%1d ", pMultiRangingData->StreamCount, no_of_object_found);
-      SerialPort.print(report);
-      for (j = 0; j < no_of_object_found; j++) {
-        if (j != 0) {
-          SerialPort.print("\r\n                   ");
-        }
-        SerialPort.print("status=");
-        SerialPort.print(pMultiRangingData->RangeData[j].RangeStatus);
-        SerialPort.print(", D=");
-        SerialPort.print(pMultiRangingData->RangeData[j].RangeMilliMeter);
-        SerialPort.print("mm");
-        SerialPort.print(", Signal=");
-        SerialPort.print((float)pMultiRangingData->RangeData[j].SignalRateRtnMegaCps / 65536.0);
-        SerialPort.print(" Mcps, Ambient=");
-        SerialPort.print((float)pMultiRangingData->RangeData[j].AmbientRateRtnMegaCps / 65536.0);
-        SerialPort.print(" Mcps");
-      }
-      SerialPort.println("");
-      if (status == 0) {
-        status = sensor_vl53l4cx_sat.VL53L4CX_ClearInterruptAndStartMeasurement();
-      }
-    }
+//     status = sensor_vl53l4cx_sat.VL53L4CX_GetMeasurementDataReady(&NewDataReady);
+//     if ((!status) && (NewDataReady != 0)) {
+//       status = sensor_vl53l4cx_sat.VL53L4CX_GetMultiRangingData(pMultiRangingData);
+//       no_of_object_found = pMultiRangingData->NumberOfObjectsFound;
+//       snprintf(report, sizeof(report), "Count=%d, #Objs=%1d ", pMultiRangingData->StreamCount, no_of_object_found);
+//       SerialPort.print(report);
+//       for (j = 0; j < no_of_object_found; j++) {
+//         if (j != 0) {
+//           SerialPort.print("\r\n                   ");
+//         }
+//         SerialPort.print("status=");
+//         SerialPort.print(pMultiRangingData->RangeData[j].RangeStatus);
+//         SerialPort.print(", D=");
+//         SerialPort.print(pMultiRangingData->RangeData[j].RangeMilliMeter);
+//         SerialPort.print("mm");
+//         SerialPort.print(", Signal=");
+//         SerialPort.print((float)pMultiRangingData->RangeData[j].SignalRateRtnMegaCps / 65536.0);
+//         SerialPort.print(" Mcps, Ambient=");
+//         SerialPort.print((float)pMultiRangingData->RangeData[j].AmbientRateRtnMegaCps / 65536.0);
+//         SerialPort.print(" Mcps");
+//       }
+//       SerialPort.println("");
+//       if (status == 0) {
+//         status = sensor_vl53l4cx_sat.VL53L4CX_ClearInterruptAndStartMeasurement();
+//       }
+//     }
 
-    digitalWrite(LedPin, LOW);
-  }
-}
+//     digitalWrite(LedPin, LOW);
+//   }
+// }

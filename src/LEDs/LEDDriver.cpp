@@ -49,7 +49,7 @@ void read_blinker_button() {
 }
 
 void led_setup() {
-  Wire.begin();
+//   Wire.begin();
 
   led_driver_left.begin(1.0, PCA9955B::NONE);
   led_driver_right.begin(1.0, PCA9955B::NONE);

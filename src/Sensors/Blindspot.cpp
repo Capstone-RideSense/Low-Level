@@ -19,7 +19,7 @@ int num_sensors = sizeof(vl53l1_list)/sizeof(vl53l1_list[0]);
 
 void blindspot_setup() {
     // Initialize I2C bus.
-    DEV_I2C.begin();
+    // DEV_I2C.begin();
 
     // Configure VL53L1 satellite component.
     left_vl53l1.begin();
