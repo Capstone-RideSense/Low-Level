@@ -11,8 +11,8 @@
 #define XSHUT_RIGHT 5
 
 // blinker button
-#define BLINKER_LEFT 7
-#define BLINKER_RIGHT 8
+#define BLINKER_BUTTON_LEFT 18
+#define BLINKER_BUTTON_RIGHT 13
 
 // threshold for blindspot (in mm)
 #define BLINDSPOT_MM 1000
@@ -32,6 +32,7 @@
 #define RIGHT_BLINDSPOT_ADDR 0x52
 #define LEFT_LED_ADDR 0x69
 #define RIGHT_LED_ADDR 0x70
+#define IMU_ADDR 0x68
 
 // haptic definitions
 #define P_HAPTIC 6 // pointer finger

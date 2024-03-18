@@ -49,6 +49,8 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
-  }
+    "typeinfo": "cpp",
+    "bmi3_defs.h": "c",
+    "bmi3.h": "c"
+}
 }

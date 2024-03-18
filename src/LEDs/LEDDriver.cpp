@@ -10,21 +10,23 @@ PCA9955B led_driver_list[] = {led_driver_left, led_driver_right};
 
 // int blindspot_ch[] = {5, 10, 11}; 
 int blindspot_ch[] = {2}; // for testing 
-int blinker_ch[] = {0, 1, 2, 3, 4, 12, 13, 14, 15};
+// int blinker_ch[] = {0, 1, 2, 3, 4, 12, 13, 14, 15};
+int blinker_ch[] = {2}; // for testing
 int haptic_ch[] = {6, 7, 8, 9};
 
-int blinker_buttons[] = {BLINKER_LEFT, BLINKER_RIGHT};
-
+int blinker_buttons[] = {BLINKER_BUTTON_LEFT, BLINKER_BUTTON_RIGHT};
 
 void turn_on_blindspot_leds(int direction) {
     for (int i = 0; i < sizeof(blindspot_ch) / sizeof(int); i++) {
-        led_driver_list[direction].pwm(blindspot_ch[i], .5); 
+        // led_driver_list[direction].pwm(blindspot_ch[i], .5); 
+        Serial.println("Blindspot on");
     }
 }
 
 void turn_off_blindspot_leds(int direction) {
     for (int i = 0; i < sizeof(blindspot_ch) / sizeof(int); i++) {
-        led_driver_list[direction].pwm(blindspot_ch[i], 0); 
+        // led_driver_list[direction].pwm(blindspot_ch[i], 0); 
+        Serial.println("Blindspot off");
     }
 }
 
@@ -49,12 +51,8 @@ void read_blinker_button() {
 }
 
 void led_setup() {
-//   Wire.begin();
-
   led_driver_left.begin(1.0, PCA9955B::NONE);
   led_driver_right.begin(1.0, PCA9955B::NONE);
-
-  // pinMode(BLINKER_BUTTON, INPUT);
 }
 
 // write to the haptic motors (connected to Bluetooth)

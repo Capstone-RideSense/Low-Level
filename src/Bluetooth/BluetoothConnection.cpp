@@ -1,5 +1,4 @@
 #include "Bluetooth/BluetoothConnection.hpp"
-#include "Sensors/HapticMotors.hpp"
 #include "LEDs/LEDDriver.hpp"
 
 // See the following for generating UUIDs:
