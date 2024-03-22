@@ -13,6 +13,7 @@
 // blinker button
 #define BLINKER_BUTTON_LEFT 18
 #define BLINKER_BUTTON_RIGHT 13
+#define BLINK_DELAY 1
 
 // threshold for blindspot (in mm)
 #define BLINDSPOT_MM 1000

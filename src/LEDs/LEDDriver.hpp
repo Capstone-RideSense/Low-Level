@@ -8,9 +8,9 @@ void turn_on_blindspot_leds(int direction);
 
 void turn_off_blindspot_leds(int direction);
 
-void read_blinker_button();
+void set_blinker(bool state);
 
-void blink_blinker(int direction);
+void read_blinker_button();
 
 void led_setup();
 

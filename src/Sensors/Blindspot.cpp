@@ -13,7 +13,6 @@ VL53L1 right_vl53l1(&DEV_I2C, XSHUT_RIGHT);
 
 
 VL53L1 vl53l1_list[] = {left_vl53l1, right_vl53l1};
-// VL53L4CX vl53l1_list[] = {left_vl53l1, right_vl53l1};
 
 int num_sensors = sizeof(vl53l1_list)/sizeof(vl53l1_list[0]);
 
@@ -42,12 +41,12 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l
     int status = vl53l1_sensor.VL53L1_GetMultiRangingData(pMultiRangingData);
     int no_of_object_found = pMultiRangingData->NumberOfObjectsFound;
 
+    if (no_of_object_found < 10) {
+
     snprintf(report, sizeof(report), "VL53L1 Satellite: Count=%d, #Objs=%1d ", pMultiRangingData->StreamCount, no_of_object_found);
     Serial.print(report);
     int num_in_blindspot = 0;
-    for (int i = 0; i < no_of_object_found; i++) {
-        // TODO: process measurement
-        
+    for (int i = 0; i < no_of_object_found; i++) {        
         // determine if it is in the blindspot
         if (pMultiRangingData->RangeData[i].RangeMilliMeter < BLINDSPOT_MM) {
             num_in_blindspot++;
@@ -78,6 +77,7 @@ void get_measurement(VL53L1_MultiRangingData_t *pMultiRangingData, VL53L1& vl53l
     // if measurement is valid, clear and prep for new measurement
     if (status == 0) {
         status = vl53l1_sensor.VL53L1_ClearInterruptAndStartMeasurement();
+    }
     }
 }
 
