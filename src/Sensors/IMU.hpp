@@ -7,4 +7,6 @@
 
 void read_imu ();
 
+void imu_setup();
+
 #endif //IMU_HPP

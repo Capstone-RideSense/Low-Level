@@ -8,7 +8,7 @@ void turn_on_blindspot_leds(int direction);
 
 void turn_off_blindspot_leds(int direction);
 
-void set_blinker(bool state);
+void set_blinker(int direction, bool state);
 
 void read_blinker_button();
 

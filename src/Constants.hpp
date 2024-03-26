@@ -5,6 +5,10 @@
 // PIN assignments
 #define LED_BUILTIN 2
 
+#define DELAY_CONST 200
+
+#define DEV_I2C Wire
+
 // for blind spot detection
 // shutdown pinds for the sensors
 #define XSHUT_LEFT 4
@@ -13,7 +17,7 @@
 // blinker button
 #define BLINKER_BUTTON_LEFT 18
 #define BLINKER_BUTTON_RIGHT 13
-#define BLINK_DELAY 1
+#define BLINK_DELAY 400
 
 // threshold for blindspot (in mm)
 #define BLINDSPOT_MM 1000
@@ -29,8 +33,8 @@
 #define RIGHT_IDX 1
 
 // addresses for sensor I2Cs
-#define LEFT_BLINDSPOT_ADDR 0x12
-#define RIGHT_BLINDSPOT_ADDR 0x52
+#define LEFT_BLINDSPOT_ADDR 0x52
+// #define RIGHT_BLINDSPOT_ADDR 0x52
 #define LEFT_LED_ADDR 0x69
 #define RIGHT_LED_ADDR 0x70
 #define IMU_ADDR 0x68

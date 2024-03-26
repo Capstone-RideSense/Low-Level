@@ -3,13 +3,10 @@
 #include <Wire.h>
 #include "Sensors/Blindspot.hpp"
 #include "LEDs/LEDDriver.hpp"
-// #include <bmi323.h>
-// #include <examples/common/common.h>
+#include "Sensors/IMU.hpp"
 bool next_states[] = {true, true};
 int cur_interval = 0;
 bool state = true;
-
-#define DEV_I2C Wire
 
 void setup()
 {
@@ -22,6 +19,10 @@ void setup()
     pinMode(XSHUT_LEFT, OUTPUT);
     pinMode(BLINKER_BUTTON_LEFT, INPUT);
 
+    //interrupt
+    pinMode(33, INPUT_PULLUP);
+    attachInterrupt(33, measure, FALLING);
+
     // pinMode(XSHUT_RIGHT, OUTPUT);
     // pinMode(BLINKER_BUTTON_RIGHT, INPUT);
 
@@ -33,6 +34,9 @@ void setup()
 
     // LEDDriver Initialization
     led_setup();
+
+    // // IMU setup
+    // imu_setup();
 }
 
 
@@ -44,6 +48,6 @@ void loop()
     // Get blindspot measurements
     blindspot_detect();
 
-    // Give some delay
-    delay(200);
+    // // read imu
+    // read_imu();
 }

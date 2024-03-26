@@ -11,7 +11,6 @@ void blindspot_setup();
 
 void blindspot_detect();
 
-void set_roi_turn(int direction);
-
+void measure();
 
 #endif // BLINDSPOT_HPP

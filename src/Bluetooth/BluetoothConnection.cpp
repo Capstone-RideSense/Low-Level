@@ -54,6 +54,8 @@ void CharacteristicCallbacks::onWrite(BLECharacteristic *pCharacteristic) {
 
     direction = instructions[0];
     intensity = instructions[1];
+    Serial.println(direction);
+    Serial.println(intensity);
 
     //check that intensity is valid
     if (!is_valid_intensity(intensity)) {
