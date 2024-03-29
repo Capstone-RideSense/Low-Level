@@ -2,15 +2,11 @@
 #define CONSTANTS_HPP
 
 
-// PIN assignments
 #define LED_BUILTIN 2
-
-#define DELAY_CONST 200
-
 #define DEV_I2C Wire
 
-// for blind spot detection
-// shutdown pinds for the sensors
+// shutdown pinds for the time of flight
+// TODO: are these different now?
 #define XSHUT_LEFT 4
 #define XSHUT_RIGHT 5
 
@@ -33,13 +29,17 @@
 #define RIGHT_IDX 1
 
 // addresses for sensor I2Cs
-#define LEFT_BLINDSPOT_ADDR 0x52
-// #define RIGHT_BLINDSPOT_ADDR 0x52
+// TODO: fix these?
+#define LEFT_BLINDSPOT_ADDR 0x12
+#define RIGHT_BLINDSPOT_ADDR 0x52
+
+// TODO: is right actually 70?
 #define LEFT_LED_ADDR 0x69
 #define RIGHT_LED_ADDR 0x70
+
 #define IMU_ADDR 0x68
 
-// haptic definitions
+// haptic definitions - for stretch goal (not happening)
 #define P_HAPTIC 6 // pointer finger
 #define M_HAPTIC 7 // middle finger
 #define R_HAPTIC 8 // ring finger
