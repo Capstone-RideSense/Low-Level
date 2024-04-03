@@ -11,8 +11,8 @@
 #define XSHUT_RIGHT 5
 
 // blinker button
-#define BLINKER_BUTTON_LEFT 18
-#define BLINKER_BUTTON_RIGHT 13
+#define BLINKER_BUTTON_LEFT 13
+#define BLINKER_BUTTON_RIGHT 18
 #define BLINK_DELAY 400
 
 // threshold for blindspot (in mm)

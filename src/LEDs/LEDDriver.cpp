@@ -48,6 +48,7 @@ void read_blinker_button() {
     for (int i = 0; i < sizeof(blinker_buttons) / sizeof(int); i++) {
         long current_ms = millis();
         long ms_dif = current_ms - start_ms[i];
+        Serial.println(digitalRead(blinker_buttons[i]));
         if (digitalRead(blinker_buttons[i]) == HIGH) {
             if (ms_dif > BLINK_DELAY) {
                 states[i] = !states[i];

@@ -6,6 +6,10 @@
 #include "Sensors/IMU.hpp"
 
 #define DEBUG_MODE 1
+#define BLINDSPOT_EN 0
+#define IMU_EN 0 
+#define LED_EN 1
+#define BLE_EN 1
 
 void setup()
 {
@@ -19,23 +23,26 @@ void setup()
     pinMode(BLINKER_BUTTON_LEFT, INPUT);
 
     // TODO: enable right
-    // pinMode(XSHUT_RIGHT, OUTPUT);
-    // pinMode(BLINKER_BUTTON_RIGHT, INPUT);
+    pinMode(XSHUT_RIGHT, OUTPUT);
+    pinMode(BLINKER_BUTTON_RIGHT, INPUT);
 
     // Bluetooth Initialization
     Serial.println("BLE setup");
     BLE_Setup();
 
     // ToF Initialization
+    #if BLINDSPOT_EN
     Serial.println("Blindspot setup");
-    blindspot_setup();
+    // blindspot_setup();
+    #endif
 
     // LEDDriver Initialization
     Serial.println("led setup");
     led_setup();
-
-    // // IMU setup
-    // imu_setup();
+    #if IMU_EN
+    // IMU setup
+    imu_setup();
+    #endif
 }
 
 
@@ -46,9 +53,13 @@ void loop()
     read_blinker_button();
 
     // Get blindspot measurements
+    #if BLINDSPOT_EN
     Serial.println("blindspot detect");
     blindspot_detect();
+    #endif
 
-    // // read imu
-    // read_imu();
+    #if IMU_EN
+    // read imu
+    read_imu();
+    #endif
 }
