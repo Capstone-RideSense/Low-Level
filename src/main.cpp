@@ -4,21 +4,27 @@
 #include "Sensors/Blindspot.hpp"
 #include "LEDs/LEDDriver.hpp"
 #include "Sensors/IMU.hpp"
+#include "Utils/scanI2C.hpp"
 
 #define DEBUG_MODE 1
 #define BLINDSPOT_EN 0
-#define IMU_EN 0 
-#define LED_EN 1
+#define IMU_EN 0
+#define LED_EN 0
 #define BLE_EN 1
+#define SCAN_I2C 0
 
 void setup()
 {
     Serial.begin(115200);
     Serial.println("I2C begin");
+
     DEV_I2C.begin();
     Serial.println("pin setup");
     pinMode(LED_BUILTIN, OUTPUT);
 
+    #if SCAN_I2C
+
+    #else
     pinMode(XSHUT_LEFT, OUTPUT);
     pinMode(BLINKER_BUTTON_LEFT, INPUT);
 
@@ -43,13 +49,17 @@ void setup()
     // IMU setup
     imu_setup();
     #endif
+    #endif
 }
 
 
 void loop()
 {
+    #if SCAN_I2C
+    scani2cbus();
+    #else 
     // Check for blinker
-    Serial.println("read blinker button");
+    Serial.println("blinker button");
     read_blinker_button();
 
     // Get blindspot measurements
@@ -61,5 +71,6 @@ void loop()
     #if IMU_EN
     // read imu
     read_imu();
+    #endif
     #endif
 }

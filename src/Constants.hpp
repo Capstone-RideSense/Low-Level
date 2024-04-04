@@ -35,7 +35,7 @@
 
 // TODO: is right actually 70?
 #define LEFT_LED_ADDR 0x69
-#define RIGHT_LED_ADDR 0x70
+#define RIGHT_LED_ADDR 0x37 // 37
 
 #define IMU_ADDR 0x68
 
