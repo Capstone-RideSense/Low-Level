@@ -5,10 +5,13 @@
 #define LED_BUILTIN 2
 #define DEV_I2C Wire
 
+#define LEFT 0
+#define RIGHT 1
+
 // shutdown pinds for the time of flight
 // TODO: are these different now?
-#define XSHUT_LEFT 4
-#define XSHUT_RIGHT 5
+#define XSHUT_LEFT 27
+#define XSHUT_RIGHT 16
 
 // blinker button
 #define BLINKER_BUTTON_LEFT 13
@@ -31,7 +34,7 @@
 // addresses for sensor I2Cs
 // TODO: fix these?
 #define LEFT_BLINDSPOT_ADDR 0x12
-#define RIGHT_BLINDSPOT_ADDR 0x52
+#define RIGHT_BLINDSPOT_ADDR 0x29
 
 // TODO: is right actually 70?
 #define LEFT_LED_ADDR 0x69

@@ -2,8 +2,6 @@
 #include "LEDs/LEDDriver.hpp"
 #include "Constants.hpp"
 #include <PCA9955B.h>
-#define LEFT 1
-#define RIGHT 1
 
 #if LEFT 
 PCA9955B led_driver_left(LEFT_LED_ADDR);
@@ -24,7 +22,6 @@ PCA9955B led_driver_list[] = {
 // TODO: change these back to the correct channels
 int blindspot_ch[] = {5, 10, 11}; 
 int blinker_ch[] = {0, 1, 2, 3, 4, 12, 13, 14, 15};
-// int blinker_ch[] = {2}; // TODO: switch back
 int haptic_ch[] = {6, 7, 8, 9};
 
 long start_ms[] = {0, 0};
@@ -90,7 +87,7 @@ void led_setup() {
     #endif
     // TODO: enable right
     #if RIGHT
-    led_driver_right.begin(1.0, PCA9955B::NONE);
+    led_driver_right.begin(1.0, PCA9955B::NONE, 1);
     #endif
 }
 
