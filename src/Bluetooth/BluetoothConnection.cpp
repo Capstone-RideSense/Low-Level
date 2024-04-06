@@ -68,7 +68,7 @@ void CharacteristicCallbacks::onWrite(BLECharacteristic *pCharacteristic) {
 }
 
 void BLE_Setup() {
-  BLEDevice::init("BLEExample");
+  BLEDevice::init("RideSense");
   BLEServer *pServer = BLEDevice::createServer();
   pServer->setCallbacks(new ServerCallbacks());
   
