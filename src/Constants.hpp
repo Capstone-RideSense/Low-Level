@@ -5,7 +5,7 @@
 #define LED_BUILTIN 2
 #define DEV_I2C Wire
 
-#define LEFT 0
+#define LEFT 1
 #define RIGHT 1
 
 // shutdown pinds for the time of flight
@@ -19,7 +19,7 @@
 #define BLINK_DELAY 400
 
 // threshold for blindspot (in mm)
-#define BLINDSPOT_MM 1000
+#define BLINDSPOT_MM 100
 
 // zone for the sensor when turning (maybe not needed)
 #define TURN_TLX 2
@@ -55,6 +55,7 @@
 #define SLIGHT_RIGHT_DIRECTION 'Y'
 #define INTENSITY_MIN 0
 #define INTENSITY_MAX 5
+
 
 // Define UUIDs used
 #define SERVICE_UUID "9bc7cd1f-f015-497c-ad8b-67cb800444fe"

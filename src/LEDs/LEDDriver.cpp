@@ -37,6 +37,13 @@ int blinker_buttons[] = {
     #endif
 };
 // int blinker_buttons[] = {BLINKER_BUTTON_LEFT};
+int right_i = 0;
+int left_i = 0;
+#if RIGHT
+    #if left
+    right_i = 1;
+    #endif
+#endif
 
 
 void turn_on_blindspot_leds(int direction) {
@@ -98,19 +105,16 @@ void haptic_write(char direction, int intensity) {
         intensity_d = 0;
     }
     if (direction == LEFT_DIRECTION) {
-        Serial.print("LEFT ");
-        Serial.println(intensity);
+        Serial.printf("LEFT - Written:%d Haptic:%f\n", intensity, intensity_d);
 
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
             led_driver_list[LEFT_IDX].pwm(haptic_ch[i], intensity_d);
         }
     } else if (direction == RIGHT_DIRECTION) {
-        Serial.println("RIGHT");
-        Serial.println(intensity);
-        Serial.println(blindspot_ch[3]);
+        Serial.printf("RIGHT - Written:%d Haptic:%f\n", intensity, intensity_d);
         // TODO: enable right (uncomment this loop)
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
-            led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], intensity_d);
+            led_driver_list[0].pwm(haptic_ch[i], intensity_d);
         }
     } else {
         Serial.println("You wrote something other than L, R");
