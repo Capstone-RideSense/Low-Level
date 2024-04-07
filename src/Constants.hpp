@@ -7,8 +7,10 @@
 
 // shutdown pinds for the time of flight
 // TODO: are these different now?
-#define XSHUT_LEFT 4
-#define XSHUT_RIGHT 5
+#define XSHUT_LEFT 27
+#define XSHUT_RIGHT 16
+#define BLINDSPOT_LEFT_PIN 35
+#define BLINDSPOT_RIGHT_PIN 23 
 
 // blinker button
 #define BLINKER_BUTTON_LEFT 13

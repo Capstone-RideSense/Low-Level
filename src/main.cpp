@@ -7,11 +7,12 @@
 #include "Utils/scanI2C.hpp"
 
 #define DEBUG_MODE 1
-#define BLINDSPOT_EN 0
+#define BLINDSPOT_EN 1
 #define IMU_EN 0
 #define LED_EN 0
 #define BLE_EN 1
 #define SCAN_I2C 0
+#define BLINKER_EN 1 
 
 void setup()
 {
@@ -25,11 +26,11 @@ void setup()
     #if SCAN_I2C
 
     #else
-    pinMode(XSHUT_LEFT, OUTPUT);
+    pinMode(XSHUT_LEFT, INPUT);
     pinMode(BLINKER_BUTTON_LEFT, INPUT);
 
     // TODO: enable right
-    pinMode(XSHUT_RIGHT, OUTPUT);
+    pinMode(XSHUT_RIGHT, INPUT);
     pinMode(BLINKER_BUTTON_RIGHT, INPUT);
 
     // Bluetooth Initialization
@@ -39,7 +40,7 @@ void setup()
     // ToF Initialization
     #if BLINDSPOT_EN
     Serial.println("Blindspot setup");
-    // blindspot_setup();
+    blindspot_setup();
     #endif
 
     // LEDDriver Initialization
@@ -58,9 +59,12 @@ void loop()
     #if SCAN_I2C
     scani2cbus();
     #else 
+
+    #if BLINKER_EN
     // Check for blinker
     Serial.println("blinker button");
     read_blinker_button();
+    #endif
 
     // Get blindspot measurements
     #if BLINDSPOT_EN
