@@ -34,17 +34,17 @@ void setup()
     pinMode(BLINKER_BUTTON_RIGHT, INPUT);
 
     // Bluetooth Initialization
-    Serial.println("BLE setup");
+    // Serial.println("BLE setup");
     BLE_Setup();
 
     // ToF Initialization
     #if BLINDSPOT_EN
-    Serial.println("Blindspot setup");
+    // Serial.println("Blindspot setup");
     blindspot_setup();
     #endif
 
     // LEDDriver Initialization
-    Serial.println("led setup");
+    // Serial.println("led setup");
     led_setup();
     #if IMU_EN
     // IMU setup
@@ -62,13 +62,13 @@ void loop()
 
     #if BLINKER_EN
     // Check for blinker
-    Serial.println("blinker button");
+    // Serial.println("blinker button");
     read_blinker_button();
     #endif
 
     // Get blindspot measurements
     #if BLINDSPOT_EN
-    Serial.println("blindspot detect");
+    // Serial.println("blindspot detect");
     blindspot_detect();
     #endif
 

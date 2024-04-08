@@ -65,7 +65,7 @@ void set_blinker (int direction, bool state) {
 }
 
 void read_blinker_button() {
-    Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
+    // Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
     for (int i = 0; i < sizeof(blinker_buttons) / sizeof(int); i++) {
         long current_ms = millis();
         long ms_dif = current_ms - start_ms[i];
@@ -101,16 +101,16 @@ void haptic_write(char direction, int intensity) {
         intensity_d = 0;
     }
     if (direction == LEFT_DIRECTION) {
-        Serial.print("LEFT ");
-        Serial.println(intensity);
+        // Serial.print("LEFT ");
+        // Serial.println(intensity);
 
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
             led_driver_list[LEFT_IDX].pwm(haptic_ch[i], intensity_d);
         }
     } else if (direction == RIGHT_DIRECTION) {
-        Serial.println("RIGHT");
-        Serial.println(intensity);
-        Serial.println(blindspot_ch[3]);
+        // Serial.println("RIGHT");
+        // Serial.println(intensity);
+        // Serial.println(blindspot_ch[3]);
         // TODO: enable right (uncomment this loop)
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
             led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], intensity_d);
