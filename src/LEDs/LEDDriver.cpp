@@ -2,8 +2,6 @@
 #include "LEDs/LEDDriver.hpp"
 #include "Constants.hpp"
 #include <PCA9955B.h>
-#define LEFT 1
-#define RIGHT 1
 
 #if LEFT 
 PCA9955B led_driver_left(LEFT_LED_ADDR);
@@ -24,7 +22,6 @@ PCA9955B led_driver_list[] = {
 // TODO: change these back to the correct channels
 int blindspot_ch[] = {5, 10, 11}; 
 int blinker_ch[] = {0, 1, 2, 3, 4, 12, 13, 14, 15};
-// int blinker_ch[] = {2}; // TODO: switch back
 int haptic_ch[] = {6, 7, 8, 9};
 
 long start_ms[] = {0, 0};
@@ -40,6 +37,13 @@ int blinker_buttons[] = {
     #endif
 };
 // int blinker_buttons[] = {BLINKER_BUTTON_LEFT};
+int right_i = 0;
+int left_i = 0;
+#if RIGHT
+    #if left
+    right_i = 1;
+    #endif
+#endif
 
 
 void turn_on_blindspot_leds(int direction) {
@@ -90,7 +94,7 @@ void led_setup() {
     #endif
     // TODO: enable right
     #if RIGHT
-    led_driver_right.begin(1.0, PCA9955B::NONE);
+    led_driver_right.begin(1.0, PCA9955B::NONE, 1);
     #endif
 }
 
@@ -101,19 +105,16 @@ void haptic_write(char direction, int intensity) {
         intensity_d = 0;
     }
     if (direction == LEFT_DIRECTION) {
-        // Serial.print("LEFT ");
-        // Serial.println(intensity);
+        Serial.printf("LEFT - Written:%d Haptic:%f\n", intensity, intensity_d);
 
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
             led_driver_list[LEFT_IDX].pwm(haptic_ch[i], intensity_d);
         }
     } else if (direction == RIGHT_DIRECTION) {
-        // Serial.println("RIGHT");
-        // Serial.println(intensity);
-        // Serial.println(blindspot_ch[3]);
+        Serial.printf("RIGHT - Written:%d Haptic:%f\n", intensity, intensity_d);
         // TODO: enable right (uncomment this loop)
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
-            led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], intensity_d);
+            led_driver_list[0].pwm(haptic_ch[i], intensity_d);
         }
     } else {
         Serial.println("You wrote something other than L, R");

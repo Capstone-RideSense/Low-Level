@@ -1,6 +1,9 @@
-// #include <Arduino.h>
+#include <Arduino.h>
 #include "Sensors/Blindspot.hpp"
+#include <Wire.h>
+#include <VL53L1X.h>
 #include "LEDs/LEDDriver.hpp"
+
 
 void blindspot_setup() {
     pinMode(BLINDSPOT_LEFT_PIN, INPUT);
