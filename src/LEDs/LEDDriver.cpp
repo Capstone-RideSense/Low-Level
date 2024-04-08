@@ -69,7 +69,7 @@ void set_blinker (int direction, bool state) {
 }
 
 void read_blinker_button() {
-    Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
+    // Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
     for (int i = 0; i < sizeof(blinker_buttons) / sizeof(int); i++) {
         long current_ms = millis();
         long ms_dif = current_ms - start_ms[i];
