@@ -47,7 +47,7 @@ void setup()
     #endif
 
     // Bluetooth Initialization
-    // Serial.println("BLE setup");
+    Serial.println("BLE setup");
     BLE_Setup();
 
     // ToF Initialization

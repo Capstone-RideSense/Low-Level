@@ -6,7 +6,7 @@
 
 void blindspot_setup();
 
-void blindspot_loop();
+void blindspot_detect();
 
 
 #endif // BLINDSPOT_HPP
