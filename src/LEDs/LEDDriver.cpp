@@ -37,13 +37,8 @@ int blinker_buttons[] = {
     #endif
 };
 // int blinker_buttons[] = {BLINKER_BUTTON_LEFT};
-int right_i = 0;
 int left_i = 0;
-#if RIGHT
-    #if left
-    right_i = 1;
-    #endif
-#endif
+int right_i = 1;
 
 
 void turn_on_blindspot_leds(int direction) {
@@ -69,7 +64,7 @@ void set_blinker (int direction, bool state) {
 }
 
 void read_blinker_button() {
-    Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
+    // Serial.printf("L:%d R:%d\n", digitalRead(blinker_buttons[0]), digitalRead(blinker_buttons[1]));
     for (int i = 0; i < sizeof(blinker_buttons) / sizeof(int); i++) {
         long current_ms = millis();
         long ms_dif = current_ms - start_ms[i];
@@ -114,7 +109,23 @@ void haptic_write(char direction, int intensity) {
         Serial.printf("RIGHT - Written:%d Haptic:%f\n", intensity, intensity_d);
         // TODO: enable right (uncomment this loop)
         for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
-            led_driver_list[0].pwm(haptic_ch[i], intensity_d);
+            led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], intensity_d);
+        }
+    } else if (direction == COMPLETE_DIR) {
+        Serial.println("Navigation Complete");
+        for (int num_blinks = 0; num_blinks < 3; num_blinks++) {
+            for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
+                led_driver_list[LEFT_IDX].pwm(haptic_ch[i], intensity_d);
+                led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], intensity_d);
+                Serial.println("haptics on");
+            }
+            delay(100);
+            for (int i = 0; i < sizeof(haptic_ch) / sizeof(int); i++) {
+                led_driver_list[LEFT_IDX].pwm(haptic_ch[i], 0);
+                led_driver_list[RIGHT_IDX].pwm(haptic_ch[i], 0);
+                Serial.println("haptics off");
+            }
+            delay(100);
         }
     } else {
         Serial.println("You wrote something other than L, R");

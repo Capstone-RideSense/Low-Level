@@ -74,7 +74,7 @@ void loop()
 
     #if BLINKER_EN
     // Check for blinker
-    Serial.println("blinker button");
+    // Serial.println("blinker button");
     read_blinker_button();
     #endif
 
