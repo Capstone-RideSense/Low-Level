@@ -7,12 +7,13 @@
 #include "Utils/scanI2C.hpp"
 
 #define DEBUG_MODE 1
-#define BLINDSPOT_EN 0
+#define BLINDSPOT_EN 1
 #define IMU_EN 0
 #define LED_EN 1
 #define BLE_EN 0
 #define BLINKER_EN 1
 #define SCAN_I2C 0
+#define BLINKER_EN 1 
 
 #define SDA_OTHER 13
 #define SCL_OTHER 14
@@ -32,16 +33,21 @@ void setup()
     #if SCAN_I2C
 
     #else
+
+    pinMode(XSHUT_LEFT, INPUT);
     #if LEFT
     pinMode(BLINKER_BUTTON_LEFT, INPUT);
     #endif
+
+
+    pinMode(XSHUT_RIGHT, INPUT);
 
     #if RIGHT
     pinMode(BLINKER_BUTTON_RIGHT, INPUT);
     #endif
 
     // Bluetooth Initialization
-    Serial.println("BLE setup");
+    // Serial.println("BLE setup");
     BLE_Setup();
 
     // ToF Initialization
@@ -51,7 +57,7 @@ void setup()
     #endif
 
     // LEDDriver Initialization
-    Serial.println("led setup");
+    // Serial.println("led setup");
     led_setup();
     #if IMU_EN
     // IMU setup
@@ -68,10 +74,6 @@ void loop()
     scani2cbus();
     #else 
 
-    // #if DEBUG_MODE
-
-    // haptic_write('R', 5);
-
     #if BLINKER_EN
     // Check for blinker
     // Serial.println("blinker button");
@@ -80,8 +82,7 @@ void loop()
 
     // Get blindspot measurements
     #if BLINDSPOT_EN
-    Serial.println("blindspot detect");
-    blindspot_loop();
+    blindspot_detect();
     #endif
 
     #if IMU_EN
